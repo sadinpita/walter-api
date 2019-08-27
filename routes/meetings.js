@@ -93,4 +93,13 @@ router.post('/meeting', function (req, res) {
 
 });
 
+// Deleting meeting with specific Id.
+router.delete('/meeting/:id', function (req, res) {
+     let meetingId = req.params.id;
+     db.query('DELETE FROM meetings WHERE id = ?', meetingId, function (error, results, fields) {
+          if (error) throw error;
+          return res.send({ error: false, data: results, message: 'Meeting has been deleted successfully.' });
+     });
+});
+
 module.exports = router;
