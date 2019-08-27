@@ -32,51 +32,65 @@ router.get('/meeting/:id', function (req, res) {
 });
 
 // Add new meeting - worker log.
-// router.post('/meeting', function (req, res) {
-//      let time = req.body.time;
-//      if (!time) {
-//           return res.status(400).send({ error: true, message: 'Please provide meeting time (string).' });
-//      } else {
-          
-//           let late = null;
+router.post('/meeting', function (req, res) {
+     let time = req.body.time;
+     let user_id = req.body.user_id;
+     let userFound = false;
 
-//           let uslov_h = false;
-//           let uslov_m = false;
+     db.query("SELECT * from workers where id = ?", user_id, function (error, results, fields) {
+          if (error) {
+               res.send(JSON.stringify({"status": 500, "error": error, "response": null})); 
+          } else {
+               workerRow = JSON.parse(JSON.stringify(results));
+               if (workerRow.length > 0) {
+                    if (!time) {
+                         return res.status(400).send({ error: true, message: 'Please provide meeting time (string).' });
+                    } else {
+                         let late = null;
+               
+                         let uslov_h = false;
+                         let uslov_m = false;
+               
+                         const prag_dolaska = 31500; // Broj sekundi koji je ustvari 8 sati i 45 minuta (8:45 je prag dolaska na vrijeme).
+               
+                         let fields = time.split(':');
+               
+                         let hours = fields[0];
+                         let minutes = fields[1];
+               
+                         let h = Number(hours);
+                         let m = Number(minutes);
+               
+                         let sekunde = (m * 60) + ((h * 60) * 60); // Broj sekundi koje treba uporediti.
+                         if (sekunde > prag_dolaska)
+                              late = true;
+                         else
+                              late = false;
+               
+                         if (h >= 0 && h < 24) { // Ovo su pravilno uneseni sati.
+                              uslov_h = true;
+                         }
+               
+                         if (m >= 0 && m < 60) { // Ovo su pravilno unesene minute.
+                              uslov_m = true;
+                         }
+               
+                         if (uslov_h == true && uslov_m == true) {
+                              db.query("INSERT INTO meetings SET user_id = ?, time = ?, late = ?", [user_id, time, late], function (error, results, fields) {
+                                   if (error) throw error;
+                                   return res.send({ error: false, data: results, message: 'New meeting has been added successfully.' });
+                              });
+                         }
+                         else {
+                              return res.send({ message: 'New meeting couldn\'t be added because the time is not in valid format.' });
+                         }
+                    }
+               } else {
+                    res.send({ message: 'New meeting couldn\'t be added because the user Id is not found.' });
+               }
+          }
+     });
 
-//           const prag_dolaska = 31500; // Broj sekundi koji je ustvari 8 sati i 45 minuta (8:45 je prag dolaska na vrijeme).
-
-//           let fields = time.split(':');
-
-//           let hours = fields[0];
-//           let minutes = fields[1];
-
-//           let h = Number(hours);
-//           let m = Number(minutes);
-
-//           let sekunde = (m * 60) + ((h * 60) * 60); // Broj sekundi koje treba uporediti.
-//           if(sekunde > prag_dolaska)
-//                late = true;
-//           else
-//                late = false;
-
-//           if (h >= 0 && h < 24) { // Ovo su pravilno uneseni sati.
-//                uslov_h = true;
-//           }
-
-//           if (m >= 0 && m < 60) { // Ovo su pravilno unesene minute.
-//                uslov_m = true;
-//           }
-
-//           if (uslov_h == true && uslov_m == true) {
-//                db.query("INSERT INTO meetings SET user_id = ?, time = ?, late = ?", [time, late], function (error, results, fields) {
-//                     if (error) throw error;
-//                     return res.send({ error: false, data: results, message: 'New meeting has been added successfully.' });
-//                });
-//           }
-//           else {
-//                return res.send({ error: false, data: results, message: 'New meeting couldn\'t be added because the time is not in valid format.' });
-//           }
-//      }
-// });
+});
 
 module.exports = router;
