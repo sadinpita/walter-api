@@ -1,0 +1,257 @@
+{
+	"id": "b749ba7c-73e5-4437-bbb0-ceb91768fca8",
+	"name": "Walter app api",
+	"description": "",
+	"auth": null,
+	"events": null,
+	"variables": [],
+	"order": [],
+	"folders_order": [
+		"ee3da33e-c77e-4222-9a46-0166d0fd5309",
+		"d994c336-2d6e-416f-9820-f557929dc01c"
+	],
+	"folders": [
+		{
+			"id": "d994c336-2d6e-416f-9820-f557929dc01c",
+			"name": "Meetings",
+			"description": "",
+			"auth": null,
+			"events": null,
+			"collection": "b749ba7c-73e5-4437-bbb0-ceb91768fca8",
+			"folder": null,
+			"order": [
+				"5a3e3fb4-7800-404f-ad1d-abc5a211be74",
+				"eb7410e8-372f-4f10-a14a-d86b4ba56d05",
+				"f22b2425-dd69-4f99-aaff-9f6c13947116",
+				"ed2e8f4e-7d2d-4e33-a0b6-42d2b463b2d2",
+				"888b8c6b-c49b-4bff-8f89-c71d5ecc8e20"
+			],
+			"folders_order": []
+		},
+		{
+			"id": "ee3da33e-c77e-4222-9a46-0166d0fd5309",
+			"name": "Workers",
+			"description": "",
+			"auth": null,
+			"events": null,
+			"collection": "b749ba7c-73e5-4437-bbb0-ceb91768fca8",
+			"folder": null,
+			"order": [
+				"0f84bf7c-e06a-4ea0-a74f-0ee6491c8ce7",
+				"d29c7971-93e4-4a87-9d28-86b014363697",
+				"044f220d-5102-4f29-8812-173e2dacbf35",
+				"947afb22-b165-435a-a3c4-7d23de6bbf60",
+				"814d1e1c-7d06-4066-90fc-f2cc87b658cb"
+			],
+			"folders_order": []
+		}
+	],
+	"requests": [
+		{
+			"id": "044f220d-5102-4f29-8812-173e2dacbf35",
+			"name": "Add new worker",
+			"url": "{{url}}/api/v1/worker",
+			"description": "",
+			"data": [],
+			"dataMode": "raw",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"name": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"type": "text"
+				}
+			],
+			"method": "POST",
+			"pathVariableData": [],
+			"queryParams": [],
+			"auth": null,
+			"events": [],
+			"folder": "ee3da33e-c77e-4222-9a46-0166d0fd5309",
+			"rawModeData": "",
+			"headers": "Content-Type: application/json\n",
+			"pathVariables": {}
+		},
+		{
+			"id": "0f84bf7c-e06a-4ea0-a74f-0ee6491c8ce7",
+			"name": "Get all workers",
+			"url": "{{url}}/api/v1/workers/",
+			"description": "",
+			"data": null,
+			"dataMode": null,
+			"headerData": [],
+			"method": "GET",
+			"pathVariableData": [],
+			"queryParams": [],
+			"auth": null,
+			"events": [],
+			"folder": "ee3da33e-c77e-4222-9a46-0166d0fd5309",
+			"headers": "",
+			"pathVariables": {}
+		},
+		{
+			"id": "5a3e3fb4-7800-404f-ad1d-abc5a211be74",
+			"name": "Get all meetings",
+			"url": "{{url}}/api/v1/meetings/",
+			"description": "",
+			"data": null,
+			"dataMode": null,
+			"headerData": [],
+			"method": "GET",
+			"pathVariableData": [],
+			"queryParams": [],
+			"auth": null,
+			"events": [],
+			"folder": "d994c336-2d6e-416f-9820-f557929dc01c",
+			"headers": "",
+			"pathVariables": {}
+		},
+		{
+			"id": "814d1e1c-7d06-4066-90fc-f2cc87b658cb",
+			"name": "Update worker",
+			"url": "{{url}}/api/v1/worker/4",
+			"description": null,
+			"data": [],
+			"dataMode": "raw",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"name": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"type": "text"
+				}
+			],
+			"method": "PUT",
+			"pathVariableData": [],
+			"queryParams": [],
+			"auth": null,
+			"events": null,
+			"folder": "ee3da33e-c77e-4222-9a46-0166d0fd5309",
+			"rawModeData": "{\n\t\"name\": \"\"\n}",
+			"headers": "Content-Type: application/json\n",
+			"pathVariables": {}
+		},
+		{
+			"id": "888b8c6b-c49b-4bff-8f89-c71d5ecc8e20",
+			"name": "Update meeting",
+			"url": "{{url}}/api/v1/meeting/4",
+			"description": "",
+			"data": [],
+			"dataMode": "raw",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"name": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"type": "text"
+				}
+			],
+			"method": "PUT",
+			"pathVariableData": [],
+			"queryParams": [],
+			"auth": null,
+			"events": [],
+			"folder": "d994c336-2d6e-416f-9820-f557929dc01c",
+			"rawModeData": "",
+			"headers": "Content-Type: application/json\n",
+			"pathVariables": {}
+		},
+		{
+			"id": "947afb22-b165-435a-a3c4-7d23de6bbf60",
+			"name": "Delete worker",
+			"url": "{{url}}/api/v1/worker/",
+			"description": "",
+			"data": null,
+			"dataMode": null,
+			"headerData": [],
+			"method": "DELETE",
+			"pathVariableData": [],
+			"queryParams": [],
+			"auth": null,
+			"events": [],
+			"folder": "ee3da33e-c77e-4222-9a46-0166d0fd5309",
+			"headers": "",
+			"pathVariables": {}
+		},
+		{
+			"id": "d29c7971-93e4-4a87-9d28-86b014363697",
+			"name": "Get worker by Id",
+			"url": "",
+			"description": "",
+			"data": null,
+			"dataMode": null,
+			"headerData": [],
+			"method": "GET",
+			"pathVariableData": [],
+			"queryParams": [],
+			"auth": null,
+			"events": [],
+			"folder": "ee3da33e-c77e-4222-9a46-0166d0fd5309",
+			"headers": "",
+			"pathVariables": {}
+		},
+		{
+			"id": "eb7410e8-372f-4f10-a14a-d86b4ba56d05",
+			"name": "Geet meeting by Id",
+			"url": "{{url}}/api/v1/meeting/1",
+			"description": "",
+			"data": null,
+			"dataMode": null,
+			"headerData": [],
+			"method": "GET",
+			"pathVariableData": [],
+			"queryParams": [],
+			"auth": null,
+			"events": [],
+			"folder": "d994c336-2d6e-416f-9820-f557929dc01c",
+			"headers": "",
+			"pathVariables": {}
+		},
+		{
+			"id": "ed2e8f4e-7d2d-4e33-a0b6-42d2b463b2d2",
+			"name": "Delete meeting",
+			"url": "{{url}}/api/v1/meeting/6",
+			"description": "",
+			"data": null,
+			"dataMode": null,
+			"headerData": [],
+			"method": "DELETE",
+			"pathVariableData": [],
+			"queryParams": [],
+			"auth": null,
+			"events": [],
+			"folder": "d994c336-2d6e-416f-9820-f557929dc01c",
+			"headers": "",
+			"pathVariables": {}
+		},
+		{
+			"id": "f22b2425-dd69-4f99-aaff-9f6c13947116",
+			"name": "Add new meeting",
+			"url": "{{url}}/api/v1/meeting",
+			"description": "",
+			"data": [],
+			"dataMode": "raw",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"name": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"type": "text"
+				}
+			],
+			"method": "POST",
+			"pathVariableData": [],
+			"queryParams": [],
+			"auth": null,
+			"events": [],
+			"folder": "d994c336-2d6e-416f-9820-f557929dc01c",
+			"rawModeData": "{\n\t\"user_id\": 1,\n\t\"time\": \"12:00\"\n}\n",
+			"headers": "Content-Type: application/json\n",
+			"pathVariables": {}
+		}
+	]
+}
