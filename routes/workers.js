@@ -6,9 +6,9 @@ var db = require('../database');
 router.get('/workers', function(req, res, next) {
      db.query('SELECT * from workers', function (error, results, fields) {
           if (error) {
-               res.send(JSON.stringify({"status": 500, "error": error, "response": null})); 
+               return res.send(JSON.stringify({"status": 500, "error": error, "response": null}));
           } else {
-               res.send(JSON.stringify({"status": 200, "error": null, "response": results}));
+               return res.send(JSON.stringify({"status": 200, "error": null, "response": results}));
           }
      });
 });
@@ -18,12 +18,16 @@ router.get('/worker/:id', function (req, res) {
      let workerId = req.params.id;
      if (!workerId) {
           return res.status(400).send({ error: true, message: 'Please provide worker Id.' });
+     } else {
+          db.query('SELECT * FROM workers where id = ?', workerId, function (error, results, fields) {
+               if (error) {
+                    return res.send(JSON.stringify({"status": 500, "error": error, "response": null}));
+               } else {
+                    let responseMsg = 'You retrieved worker Id ' + workerId + '.';
+                    return res.send({ error: false, data: results[0], message: responseMsg });
+               }
+          });
      }
-     db.query('SELECT * FROM workers where id = ?', workerId, function (error, results, fields) {
-          if (error) throw error;
-          let responseMsg = 'You retrieved worker Id ' + workerId + '.';
-          return res.send({ error: false, data: results[0], message: responseMsg });
-     });
 });
 
 // Add new worker.
@@ -33,8 +37,11 @@ router.post('/worker', function (req, res) {
           return res.status(400).send({ error: true, message: 'Please provide worker name (string).' });
      } else {
           db.query("INSERT INTO workers SET name = ?", name, function (error, results, fields) {
-               if (error) throw error;
-               return res.send({ error: false, data: results, message: 'New worker has been added successfully.' });
+               if (error) {
+                    return res.send(JSON.stringify({"status": 500, "error": error, "response": null}));
+               } else {
+                    return res.send({ error: false, data: results, message: 'New worker has been added successfully.' });
+               }
           });
      }
 });
@@ -43,8 +50,11 @@ router.post('/worker', function (req, res) {
 router.delete('/worker/:id', function (req, res) {
      let workerId = req.params.id;
      db.query('DELETE FROM workers WHERE id = ?', workerId, function (error, results, fields) {
-          if (error) throw error;
-          return res.send({ error: false, data: results, message: 'Worker has been deleted successfully.' });
+          if (error) {
+               return res.send(JSON.stringify({"status": 500, "error": error, "response": null}));
+          } else {
+               return res.send({ error: false, data: results, message: 'Worker has been deleted successfully.' });
+          }
      });
 });
 
@@ -56,8 +66,11 @@ router.put('/worker/:id', function (req, res) {
           return res.status(400).send({ error: true, message: 'Please provide new name.' });
      } else {
           db.query("UPDATE workers SET name = ? WHERE id = ?", [name, workerId], function (error, results, fields) {
-               if (error) throw error;
-               return res.send({ error: false, data: results, message: 'Worker has been updated successfully.' });
+               if (error) {
+                    return res.send(JSON.stringify({"status": 500, "error": error, "response": null}));
+               } else {
+                    return res.send({ error: false, data: results, message: 'Worker has been updated successfully.' });
+               }
           });
      }
 });

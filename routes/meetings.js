@@ -44,9 +44,9 @@ function checkTimeFormat (time) {
 router.get('/meetings', function(req, res, next) {
      db.query('SELECT * from meetings', function (error, results, fields) {
           if (error) {
-               res.send(JSON.stringify({"status": 500, "error": error, "response": null})); 
+               return res.send(JSON.stringify({"status": 500, "error": error, "response": null})); 
           } else {
-               res.send(JSON.stringify({"status": 200, "error": null, "response": results}));
+               return res.send(JSON.stringify({"status": 200, "error": null, "response": results}));
           }
      });
 });
@@ -75,7 +75,7 @@ router.post('/meeting', function (req, res) {
 
      db.query("SELECT * from workers where id = ?", user_id, function (error, results, fields) {
           if (error) {
-               res.send(JSON.stringify({"status": 500, "error": error, "response": null})); 
+               return res.send(JSON.stringify({"status": 500, "error": error, "response": null})); 
           } else {
                workerRow = JSON.parse(JSON.stringify(results));
                if (workerRow.length > 0) {
@@ -93,7 +93,7 @@ router.post('/meeting', function (req, res) {
                          }
                     }
                } else {
-                    res.send({ message: 'New meeting couldn\'t be added because the user Id is not found.' });
+                    return res.send({ message: 'New meeting couldn\'t be added because the user Id is not found.' });
                }
           }
      });
@@ -103,8 +103,11 @@ router.post('/meeting', function (req, res) {
 router.delete('/meeting/:id', function (req, res) {
      let meetingId = req.params.id;
      db.query('DELETE FROM meetings WHERE id = ?', meetingId, function (error, results, fields) {
-          if (error) throw error;
-          return res.send({ error: false, data: results, message: 'Meeting has been deleted successfully.' });
+          if (error) { 
+               return res.send(JSON.stringify({"status": 500, "error": error, "response": null}));
+          } else {
+               return res.send({ error: false, data: results, message: 'Meeting has been deleted successfully.' });
+          }
      });
 });
 
@@ -116,7 +119,7 @@ router.put('/meeting/:id', function (req, res) {
 
      db.query("SELECT * from workers where id = ?", user_id, function (error, results, fields) {
           if (error) {
-               res.send(JSON.stringify({"status": 500, "error": error, "response": null})); 
+               return res.send(JSON.stringify({"status": 500, "error": error, "response": null})); 
           } else {
                workerRow = JSON.parse(JSON.stringify(results));
                if (workerRow.length > 0) {
@@ -127,19 +130,17 @@ router.put('/meeting/:id', function (req, res) {
                          if (arrValues2[1]) {
                               db.query("UPDATE meetings SET user_id = ?, time = ?, late = ? WHERE id = ?", [user_id, time, arrValues2[0], meetingId], function (error, results, fields) {
                                    if (error) throw error;
-                                   return res.send({ error: false, data: results, message: 'New meeting has been added successfully.' });
+                                   return res.send({ error: false, data: results, message: 'Meeting has been updated successfully.' });
                               });
                          } else {
-                              return res.send({ message: 'New meeting couldn\'t be added because the time is not in valid format.' });
+                              return res.send({ message: 'Meeting couldn\'t be updated because the time is not in valid format.' });
                          }
                     }
                } else {
-                    res.send({ message: 'New meeting couldn\'t be added because the user Id is not found.' });
+                    return res.send({ message: 'Meeting couldn\'t be updated because the user Id is not found.' });
                }
           }
      });
-
-     
 });
 
 module.exports = router;
